@@ -18,6 +18,7 @@ func main() {
 
 	var cfg *app.Config
 	// load application configurations
+	// 多文件路径 可以实现配置覆盖 通用配置出现最前面 特化的出现后面
 	cfg, err := app.LoadConfig("./config")
 	if err != nil {
 		// panic(fmt.Errorf("Invalid application configuration: %s", err))

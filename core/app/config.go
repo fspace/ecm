@@ -51,12 +51,11 @@ func LoadConfig(configPaths ...string) (*Config, error) {
 	if err := v.ReadInConfig(); err != nil {
 		return nil, fmt.Errorf("Failed to read the configuration file: %s", err)
 	}
-	var cfg = Config{
-		Raw: v,
-	}
+	var cfg = Config{}
 	if err := v.Unmarshal(&cfg); err != nil {
 		return nil, err
 	}
+	cfg.Raw = v
 	return &cfg, cfg.Validate()
 
 }
