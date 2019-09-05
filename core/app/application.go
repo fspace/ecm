@@ -6,6 +6,8 @@ import (
 	"github.com/prometheus/common/log"
 )
 
+// Application
+// FIXME 可以考虑也实现 Module接口 变为组合设计模式？
 type Application struct {
 	Context
 	Config  Config            // todo 改为引用？

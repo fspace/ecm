@@ -16,3 +16,4 @@ sqlite_db: "my_db.db"
 #
 hello-bundle:
     someKey: "value for some key for hello-bundle"
+    name: "yiqing"
