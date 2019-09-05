@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/fspace/ecm/bundles/hello/delivery/backend"
+	backend2 "github.com/fspace/ecm/bundles/playgorm/delivery/backend"
 	"github.com/fspace/ecm/core/app"
 )
 
@@ -17,23 +18,26 @@ func main() {
 	// ## 各个bundles 实例化  并挂接|注册到 App上
 
 	var cfg *app.Config
-	// load application configurations
+	// load appInst configurations
 	// 多文件路径 可以实现配置覆盖 通用配置出现最前面 特化的出现后面
 	cfg, err := app.LoadConfig("./config")
 	if err != nil {
-		// panic(fmt.Errorf("Invalid application configuration: %s", err))
+		// panic(fmt.Errorf("Invalid appInst configuration: %s", err))
 		fmt.Println("LoadConfig", err)
 	}
 
 	// appInstance :=
 	// 包被同名变量覆盖？
 	// TODO 把结构体cfg改为引用类型 避免复制！
-	app := app.New(*cfg) // 创建应用  可以用上一步加载出来的应用配置作为应用程序对象的依赖
-	app.Init()
+	appInst := app.New(*cfg) // 创建应用  可以用上一步加载出来的应用配置作为应用程序对象的依赖
+	appInst.Init()
 
 	// 加载各个bundle
 	// 注册的时候初始化呢 还是运行时Run 再遍历做初始化？
-	app.RegisterModule("hello", backend.New( /** 依赖注入 后期考虑 前期先用pull的方法 拉自己的依赖 */ ))
+	appInst.RegisterModule("hello", backend.New(
+		/** 依赖注入 后期考虑 前期先用pull的方法 拉自己的依赖 */
+		appInst))
+	appInst.RegisterModule("playgorm", backend2.New(appInst))
 
-	app.Run()
+	appInst.Run()
 }

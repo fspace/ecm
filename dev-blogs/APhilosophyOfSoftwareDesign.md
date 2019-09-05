@@ -149,3 +149,45 @@ It may seem unlikely that you would need multiple instances in production, but t
         system. Contexts may also create thread-safety issues; the best way to avoid problems is for variables in a context 
         to be immutable. Unfortunately, I haven’t found a better solution than contexts.
 
+pulls complexity downward.
+-------------------------
+
+复杂度下移  
+远离使用者 移到下层类|结构|依赖
+
+Configuration parameters are an example of moving complexity upwards instead of down.
+程序能计算的就不要暴露给用户去配置
+
+
+分好 还是合好
+-------------------
+
+One of the most fundamental questions in software design is this: given two pieces of functionality, should they be 
+implemented together in the same place, or should their implementations be separated? This question applies at all 
+levels in a system, such as functions, methods, classes, and services.
+
+When deciding whether to combine or separate, the goal is to reduce the complexity of the system as a whole and 
+improve its modularity.
+### 合
+- Bring together if information is shared
+
+- Bring together if it will simplify the interface
+
+- Bring together to eliminate duplication
+
+### 分
+- Separate general-purpose and special-purpose code
+
+Special-purpose code associated with a general-purpose mechanism should normally go in a different module 
+(typically one associated with the particular purpose).
+
+In general, the lower layers of a system tend to be more general-purpose and the upper layers more special-purpose. 
+
+When you encounter a class that includes both general-purpose and special-purpose features for the same abstraction,
+ see if the class can be separated into two classes, one containing the general-purpose features, 
+ and the other layered on top of it to provide the special-purpose features.
+ 
+ Splitting and joining methods
+ -------------
+ 
+ Each method should do one thing and do it completely.
