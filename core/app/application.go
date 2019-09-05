@@ -22,9 +22,15 @@ func (app *Application) Init() {
 	log.Info("app::init")
 
 	app.modules = make(map[string]Module)
-	// 实例化必要的应用程序组件  事件注册等任务
+	// -------------------------------------------------------------------------------------- +|
+	// ## 实例化必要的应用程序组件  事件注册等任务
+
 	//  == 应用程序组件存储在Context里面
-	db, err := gorm.Open("sqlite3", "test.db")
+
+	// 从配置获取数据库路径 演示组件实例化需要的配置获取   从配置类获取 或者原始方式获取  最好用前者  以后好改为依赖注入！
+	dbPath := app.Config.Raw.Get("sqlite_db")
+	// db, err := gorm.Open("sqlite3", "test.db")
+	db, err := gorm.Open("sqlite3", dbPath)
 	if err != nil {
 		panic("连接数据库失败")
 	}
@@ -36,10 +42,11 @@ func (app *Application) Run() {
 	log.Info("app::run")
 	defer app.DB.Close()
 
-	// 运行其他模块？
+	// 顺序运行各模块？
 	for mid, mod := range app.modules {
 		fmt.Println("run module: ", mid)
 		mod.Start() // TODO 错误处理
+		// TODO Burrow中 反向停止开启的模块
 	}
 
 }
