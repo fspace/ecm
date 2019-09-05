@@ -8,6 +8,7 @@ type Module interface {
 	Configure(v *viper.Viper)
 
 	// Init for initializing some components this module depend , eg: db redisClient mongoClient etc...
+	// TODO 是否引入依赖 AppContext ？  还是依赖App？              appContext可以作为app的内嵌对象
 	Init()
 	// Stop() error
 }

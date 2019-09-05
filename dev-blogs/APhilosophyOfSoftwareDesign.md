@@ -56,3 +56,96 @@ Dependencies lead to change amplification and a high cognitive load.
  重构会影响当前任务的进度
  
  tactical tornado  功能实现很快的人 被视为编码英雄 但对长远发展的代码库 他就是挖坑者
+ 
+ ========================================================================================
+ 
+ Modules Should Be Deep
+ 
+ In modular design, a software system is decomposed into a collection of modules that are relatively independent.
+  Modules can take many forms, such as classes, subsystems, or services. In an ideal world, each module would be
+   completely independent of the others: a developer could work in any of the modules without knowing anything about 
+   any of the other modules. In this world, the complexity of a system would be the complexity of its worst module.
+   
+Unfortunately, this ideal is not achievable. Modules must work together by calling each others’s functions or methods.
+ As a result, modules must know something about each other. There will be dependencies between the modules:
+ 
+ In order to manage dependencies, we think of each module in two parts: an interface and an implementation. 
+ The interface consists of everything that a developer working in a different module must know in order to use the given module.
+  Typically, the interface describes what the module does but not how it does it.
+  
+  The implementation consists of the code that carries out the promises
+  made by the interface. A developer working in a particular module must understand the interface and implementation of
+   that module, plus the interfaces of any other modules invoked by the given module. A developer should not need to
+    understand the implementations of modules other than the one he or she is working in.
+    
+   >The best modules are deep: they have a lot of functionality hidden behind a simple interface. A deep module is a good
+     abstraction because only a small fraction of its internal complexity is visible to its users.
+
+Deep modules such as Unix I/O (5个函数签名 )and garbage collectors （0个方法签名） provide powerful abstractions because they are easy to use,
+ yet they hide significant implementation complexity.
+
+
+接口复杂度 width
+实现复杂度 height
+二者形成一个长方形
+
+浅模块|类 可能是不好的信号
+...
+
+通用 vs 特定
+--------------------------------
+
+模块的接口尽量考虑通用  实现可以特定于某个特殊的当下需求
+
+随着时间的推移 通用性接口 柔性更强
+  认知负担比较低 简单 复杂度比较低
+  
+什么样的接口是通用性|普遍性接口？
+> What is the simplest interface that will cover all my current needs? If you reduce the number of methods in an API
+ without reducing its overall capabilities, then you are probably creating more general-purpose methods.
+
+pass through
+-----------------------
+- Pass-through methods
+
+...
+
+装饰器是否有其他考虑实现
+
+- pass-through variable.  
+
+多层传递 但只有特定层才需要
+
+全局对象（X）
+
+> but global variables almost always create other problems. For example, global variables make it impossible to create 
+two independent instances of the same system in the same process, since accesses to the global variables will conflict. 
+It may seem unlikely that you would need multiple instances in production, but they are often useful in testing.
+
+上下文对象 （ok）
+> A context stores all of the application’s global state (anything that would otherwise be a pass-through variable or
+ global variable). Most applications have multiple variables in their global state, representing things such as 
+ configuration options, shared subsystems, and performance counters. There is one context object per instance of the 
+ system. The context allows multiple instances of the system to coexist in a single process, each with its own context.
+
+ >Unfortunately, the context will probably be needed in many places, so it can potentially become a pass-through variable.
+  To reduce the number of methods that must be aware of it, a reference to the context can be saved in most of the
+   system’s major objects.
+   ...
+   When a new object is created, the creating method retrieves the context reference from its object and passes it to
+    the constructor for the new object. With this approach, the context is available everywhere, but it only appears as 
+    an explicit argument in constructors.
+    The context object unifies the handling of all system-global information and eliminates the need for pass-through 
+    variables. If a new variable needs to be added, it can be added to the context object; no existing code is affected 
+    except for the constructor and destructor for the context. The context makes it easy to identify and manage the global
+     state of the system, since it is all stored in one place. The context is also convenient for testing: test code can
+      change the global configuration of the application by modifying fields in the context. It would be much more difficult 
+      to implement such changes if the system used pass-through variables.
+      ...
+      不完美也没有更好办法了：
+      Contexts are far from an ideal solution. The variables stored in a context have most of the disadvantages of global
+       variables; for example, it may not be obvious why a particular variable is present, or where it is used. Without
+        discipline, a context can turn into a huge grab-bag of data that creates nonobvious dependencies throughout the 
+        system. Contexts may also create thread-safety issues; the best way to avoid problems is for variables in a context 
+        to be immutable. Unfortunately, I haven’t found a better solution than contexts.
+
