@@ -1,14 +1,14 @@
-package backend
+package console
 
 import (
 	"fmt"
 	"github.com/fspace/ecm/bundles/hello"
-	"github.com/fspace/ecm/core/app"
+	"github.com/fspace/ecm/core/app/console"
 	"github.com/spf13/viper"
 	"log"
 )
 
-func New(appInst *app.Application) *Bundle {
+func New(appInst *console.Application) *Bundle {
 	// fmt.Println(appInst)
 	//return &Bundle{
 	//	   //app.ModuleContext{App:app},
@@ -20,13 +20,14 @@ func New(appInst *app.Application) *Bundle {
 }
 
 type Bundle struct {
-	app.BaseModule
+	console.BaseModule
 	Config *hello.Config
 }
 
 // TODO 校验配置是否正确！
 func (b *Bundle) Configure(viper *viper.Viper) error {
 	log.Println("hello-bundle::configure")
+	log.Println(viper.AllKeys())
 	v := viper.Sub("hello-bundle")
 
 	confVal := v.Get("someKey")
@@ -42,10 +43,5 @@ func (b *Bundle) Configure(viper *viper.Viper) error {
 
 func (b *Bundle) Init() error {
 	log.Println("hello-bundle::init")
-	return nil
-}
-
-func (b *Bundle) Start() error {
-	fmt.Println("hello from start ")
 	return nil
 }

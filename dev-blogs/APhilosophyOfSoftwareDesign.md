@@ -214,3 +214,44 @@ When you encounter a class that includes both general-purpose and special-purpos
    
 The exceptions thrown by a class are part of its interface; **classes with lots of exceptions have complex interfaces,
  and they are shallower than classes with fewer exceptions.**   An exception is a particularly complex element of an
+ interface. It can propagate up through several stack levels before being caught, so it affects not just the method’s 
+ caller, but potentially also higher-level callers (and their interfaces).
+ 
+ Throwing exceptions is easy; handling them is hard. Thus, the complexity of exceptions comes from the exception 
+ handling code. The best way to **reduce the complexity damage caused by exception handling is to reduce the number 
+ of places where exceptions have to be handled.**
+ 
+ The best way to eliminate exception handling complexity is to define your APIs so that there are no exceptions to handle:
+  **define errors out of existence.**
+  
+  ### Mask exceptions
+  掩盖异常
+  Exception masking is an example of pulling complexity downward.
+  
+  ### Exception aggregation
+  The idea behind exception aggregation is to handle many exceptions with a single piece of code;
+  
+  go 有个库： https://godoc.org/go.uber.org/multierr
+  
+  
+  With exceptions, as with many other areas in software design, you must determine what is important and what is not
+   important. Things that are not important should be hidden, and the more of them the better. But when something 
+   is important, it must be exposed.
+   
+   ## 11 Design it Twice
+   
+   Try to pick approaches that are radically different from each other; you’ll
+   learn more that way. Even if you are certain that there is only one reasonable approach, consider a second design 
+   anyway, no matter how bad you think it will be. It will be instructive to think about the weaknesses of that design
+    and contrast them with the features of other designs.
+    
+   The design-it-twice principle can be applied at many levels in a system. For a module, you can use this approach 
+   first to pick the interface, as described above. Then you can apply it again when you are designing the implementation:
+   
+   if you want to get really great results, you have to consider a second possibility, or perhaps a third, no matter how 
+   smart you are. The design of large software systems falls in this category: no-one is good enough to get it right with
+    their first try.
+    
+   12 Why Write Comments?
+   ---------------
+   process of writing comments, if done correctly, will actually improve a system’s design. 

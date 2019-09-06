@@ -19,7 +19,7 @@ func main() {
 
 	var cfg *app.Config
 	// load appInst configurations
-	// 多文件路径 可以实现配置覆盖 通用配置出现最前面 特化的出现后面
+	// 多文件路径 可以实现配置覆盖 通用配置出现在后面 特化的出现在前面    前面覆盖后面的
 	cfg, err := app.LoadConfig("./config")
 	if err != nil {
 		// panic(fmt.Errorf("Invalid appInst configuration: %s", err))
@@ -35,7 +35,6 @@ func main() {
 	// 加载各个bundle
 	// 注册的时候初始化呢 还是运行时Run 再遍历做初始化？
 	appInst.RegisterModule("hello", backend.New(
-		/** 依赖注入 后期考虑 前期先用pull的方法 拉自己的依赖 */
 		appInst))
 	appInst.RegisterModule("playgorm", backend2.New(appInst))
 

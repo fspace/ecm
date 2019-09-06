@@ -30,23 +30,27 @@ type Module interface {
 // 让模块依赖应用程序这个根对象？
 type BaseModule struct {
 	App *Application
+	ProtoModule
+}
+
+type ProtoModule struct {
 }
 
 // TODO 全部补全么？
 
-func (bm *BaseModule) Configure(v *viper.Viper) error {
+func (m *ProtoModule) Configure(v *viper.Viper) error {
 	log.Info("default Module run Configure from BaseModule")
 	return nil
 }
-func (bm *BaseModule) Init() error {
+func (m *ProtoModule) Init() error {
 	log.Info("default Module run Init from BaseModule")
 	return nil
 }
 
-func (bm *BaseModule) Start() error {
+func (m *ProtoModule) Start() error {
 	log.Info("default Module run Start from BaseModule")
 	return nil
 }
-func (bm *BaseModule) Stop() error {
+func (m *ProtoModule) Stop() error {
 	return nil
 }
