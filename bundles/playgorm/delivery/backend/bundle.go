@@ -19,17 +19,20 @@ type Bundle struct {
 }
 
 // TODO 校验配置是否正确！
-func (b *Bundle) Configure(viper *viper.Viper) {
+func (b *Bundle) Configure(viper *viper.Viper) error {
 	log.Println("playgorm-bundle::configure")
 	//v := viper.Sub("hello-bundle")
 	//
 	//confVal := v.Get("someKey")
 	//fmt.Println("someKey is : ", confVal)
 	//fmt.Println(viper.AllKeys())
+	return nil
 }
 
-func (b *Bundle) Init() {
+func (b *Bundle) Init() error {
 	log.Println("playgorm-bundle::init")
+
+	return nil
 }
 
 func (b *Bundle) Start() error {

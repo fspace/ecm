@@ -1,4 +1,5 @@
 复杂性
+-------
 
 修改 理解代码的难易程度 影响修改，理解系统的一切因素
 
@@ -191,3 +192,25 @@ When you encounter a class that includes both general-purpose and special-purpos
  -------------
  
  Each method should do one thing and do it completely.
+ 
+ Define Errors Out Of Existence
+ ----------------
+ Exception handling is one of the worst sources of complexity in software systems.
+ 错误|异常 处理 带来了复杂性
+ A particular piece of code may encounter exceptions in several different ways:
+ • A caller may provide bad arguments or configuration information.
+ • An invoked method may not be able to complete a requested operation. For example, an I/O operation may fail, or a required resource may not be available.
+ • In a distributed system, network packets may be lost or delayed, servers may not respond in a timely fashion, 
+ or peers may communicate in unexpected ways.
+ • The code may detect bugs, internal inconsistencies, or situations it is not prepared to handle.
+ 
+ When an exception occurs, the programmer can deal with it in two ways, each of which can be complicated. The
+ first approach is to move forward and complete the work in progress in spite of the exception. For example, 
+ if a network packet is lost, it can be resent; if data is corrupted, perhaps it can be recovered from a redundant copy.
+  The second approach is to abort the operation in progress and report the exception upwards. However, aborting can be 
+  complicated because the exception may have occurred at a point where system state is inconsistent (a data structure 
+  might have been partially initialized); the exception handling code must restore consistency, such as by unwinding any
+   changes made before the exception occurred.
+   
+The exceptions thrown by a class are part of its interface; **classes with lots of exceptions have complex interfaces,
+ and they are shallower than classes with fewer exceptions.**   An exception is a particularly complex element of an

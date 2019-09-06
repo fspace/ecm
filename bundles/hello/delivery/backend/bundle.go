@@ -25,7 +25,7 @@ type Bundle struct {
 }
 
 // TODO 校验配置是否正确！
-func (b *Bundle) Configure(viper *viper.Viper) {
+func (b *Bundle) Configure(viper *viper.Viper) error {
 	log.Println("hello-bundle::configure")
 	v := viper.Sub("hello-bundle")
 
@@ -37,8 +37,10 @@ func (b *Bundle) Configure(viper *viper.Viper) {
 	fmt.Printf("config is : %#v \n", conf)
 	b.Config = &conf
 
+	return nil
 }
 
-func (b *Bundle) Init() {
+func (b *Bundle) Init() error {
 	log.Println("hello-bundle::init")
+	return nil
 }
