@@ -2,8 +2,8 @@ package memory
 
 import "github.com/fspace/ecm/bundles/funda/entities"
 
-// TODO interface{} 空类型需要转成具体类型   目前先占位实现！
 // TODO 方法返回值需要定义 error 作为异常抛出机制
+// TODO 可以找个线程安全的集合类库做测试 或者内嵌内存式db
 
 type InMemoryHouseRepository struct {
 	Store map[int64]entities.House

@@ -50,6 +50,7 @@ func (b *Bundle) Init() error {
 	return nil
 }
 
+//==========================================================================================
 func initCommands(app *kingpin.Application) {
 	cmd_addUser := &cmds.AddUserCommand{}
 	addUser := app.Command("user-add", "create users.").Action(cmd_addUser.Run)
