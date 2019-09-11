@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/prometheus/common/log"
 )
@@ -12,6 +13,8 @@ type Application struct {
 	Context
 	Config  Config            // todo 改为引用？
 	modules map[string]Module // todo 改为 map[string]*Module 类型
+	// GinRouter gin.IRouter
+	GinRouter *gin.Engine
 }
 
 func New(conf Config) *Application {
@@ -38,6 +41,10 @@ func (app *Application) Init() {
 	}
 	app.DB = db
 
+	// 实例化 gin-router  先绑定到gin框架  按理 这里可以用不同的框架的  可以做包级别适配  比如不同的框架里面都有这个类
+	// 然后main入口 顶部切换不同的包即可 使用代码不变
+	app.GinRouter = gin.Default()
+	buildRouter(app)
 }
 
 func (app *Application) Run() {
@@ -50,7 +57,7 @@ func (app *Application) Run() {
 		mod.Start() // TODO 错误处理
 		// TODO Burrow中 反向停止开启的模块
 	}
-
+	panic(app.GinRouter.Run(":8080"))
 }
 
 func (app *Application) RegisterModule(mid string, m Module) error {
@@ -65,4 +72,15 @@ func (app *Application) RegisterModule(mid string, m Module) error {
 	app.modules[mid] = m
 
 	return nil
+}
+
+// --------------------------------------------------------
+
+func buildRouter(appInst *Application) {
+	r := appInst.GinRouter
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
 }

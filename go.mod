@@ -4,10 +4,12 @@ require (
 	cloud.google.com/go v0.44.3 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4 // indirect
+	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a // indirect
 	github.com/coreos/bbolt v1.3.3 // indirect
 	github.com/coreos/etcd v3.3.15+incompatible // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20190719114852-fd7a80b32e1f // indirect
+	github.com/gin-gonic/gin v1.4.0
 	github.com/go-kit/kit v0.9.0 // indirect
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6 // indirect
@@ -47,5 +49,6 @@ require (
 	google.golang.org/api v0.9.0 // indirect
 	google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55 // indirect
 	google.golang.org/grpc v1.23.0 // indirect
+	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	honnef.co/go/tools v0.0.1-2019.2.2 // indirect
 )

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	fundaConsole "github.com/fspace/ecm/bundles/funda/delivery/console"
 	helloConsole "github.com/fspace/ecm/bundles/hello/delivery/console"
 	"github.com/fspace/ecm/core/app"
 	"github.com/fspace/ecm/core/app/console"
@@ -28,6 +29,8 @@ func main() {
 	// 注册的时候初始化呢 还是运行时Run 再遍历做初始化？
 	appInst.RegisterModule("hello", helloConsole.New(
 		appInst))
+
+	appInst.RegisterModule("funda", fundaConsole.New(appInst))
 
 	appInst.Run()
 }

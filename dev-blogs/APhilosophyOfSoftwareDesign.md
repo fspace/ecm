@@ -254,4 +254,62 @@ The exceptions thrown by a class are part of its interface; **classes with lots 
     
    12 Why Write Comments?
    ---------------
-   process of writing comments, if done correctly, will actually improve a system’s design. 
+   process of writing comments, if done correctly, will actually improve a system’s design.
+   
+13 Comments Should Describe Things that Aren’t Obvious from the Code 
+-----------
+### Red Flag: Comment Repeats Code
+**use different words in the comment from those in the name of the entity being described.**
+
+### Lower-level comments add precision
+
+• What are the units for this variable?
+• Are the boundary conditions inclusive or exclusive?
+• If a null value is permitted, what does it imply?
+• If a variable refers to a resource that must eventually be freed or closed, who is responsible for freeing or closing it?
+• Are there certain properties that are always true for the variable (invariants),such as “this list always contains at least one entry”?
+
+When documenting a variable, think nouns, not verbs. In other words, focus on what the variable represents, not how it is manipulated.
+
+评论比代码更详细 级别更低
+评论比代码更高级别 更抽象
+同级别的就是对代码的重复 不建议！
+
+### Higher-level comments enhance intuition
+
+The second way in which comments can augment code is by providing intuition. These comments are written at a higher level
+ than the code. They omit details and help the reader to understand the overall intent and structure of the code.
+  This approach is commonly used for comments inside methods, and for interface comments.
+
+
+Higher-level comments are more difficult to write than lower-level comments because you must think about the code in a different way.
+
+ASK yourself: What is this code trying to do? What is the simplest thing you can say that explains everything in the code?
+ What is the most important thing about this code?
+ 
+ Engineers tend to be very detail-oriented. We love details and are good at managing lots of them; this is essential 
+ for being a good engineer. But, great software designers can also step back from the details and think about a system at a higher level.
+
+### Interface documentation
+**If you want code that presents good abstractions, you must document those abstractions with comments.**
+
+The first step in documenting abstractions is to separate interface comments from implementation comments. 
+Interface comments provide information that someone needs to know in order to use a class or method; 
+they define the abstraction. Implementation comments describe how a class or method works internally in order to 
+implement the abstraction. It’s important to separate these two kinds of comments, so that users of an interface are 
+not exposed to implementation details.
+
+**If interface comments must also describe the implementation, then the class or method is shallow.**
+
+### 13.6 Implementation comments: what and why, not how
+
+Implementation comments are the comments that appear inside methods to help readers understand how they work internally.
+
+**The main goal of implementation comments is to help readers understand what the code is doing (not how it does it).**
+
+### Cross-module design decisions
+
+In a perfect world, every important design decision would be encapsulated within a single class. Unfortunately,
+ real systems inevitably end up with design decisions that affect multiple classes. For example, the design of a network
+  protocol will affect both the sender and the receiver, and these may be implemented in different places. Cross-module 
+  decisions are often complex and subtle, and they account for many bugs, so good documentation for them is crucial.

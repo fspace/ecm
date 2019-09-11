@@ -12,6 +12,7 @@ import (
 // - https://github.com/go-playground/validator/
 // - https://github.com/go-ozzo/ozzo-validation  强哥的
 // 上面两个通过注解tag来写验证规则 强哥的是从yii中移植过来的  在方法上做手脚 更灵活可控 还能进行特殊验证
+// NOTE 真正的验证逻辑应该出现在领域层 属于领域知识
 
 type ContactAgentInteractor struct {
 	HouseRepo entities.IHouseRepo

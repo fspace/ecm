@@ -33,6 +33,7 @@ type BaseModule struct {
 	ProtoModule
 }
 
+// ProtoModule is a stub Module which implements the Module interface with all empty methods !
 type ProtoModule struct {
 }
 

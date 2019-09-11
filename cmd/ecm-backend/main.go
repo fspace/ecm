@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	fundaBackend "github.com/fspace/ecm/bundles/funda/delivery/backend"
 	"github.com/fspace/ecm/bundles/hello/delivery/backend"
 	backend2 "github.com/fspace/ecm/bundles/playgorm/delivery/backend"
 	"github.com/fspace/ecm/core/app"
@@ -37,6 +38,7 @@ func main() {
 	appInst.RegisterModule("hello", backend.New(
 		appInst))
 	appInst.RegisterModule("playgorm", backend2.New(appInst))
+	appInst.RegisterModule("funda", fundaBackend.New(appInst))
 
 	appInst.Run()
 }
