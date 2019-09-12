@@ -1,11 +1,12 @@
 package backend
 
 import (
+	"github.com/fspace/ecm/bundles/funda/delivery/backend/controllers"
+	"github.com/fspace/ecm/bundles/funda/gateways/memory"
+	"github.com/fspace/ecm/bundles/funda/usecases"
 	"github.com/fspace/ecm/core/app"
-	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"log"
-	"net/http"
 )
 
 func New(appInst *app.Application) *Bundle {
@@ -45,8 +46,11 @@ func buildRouter(appInst *app.Application) {
 	// Simple group: v1
 	rg := r.Group("/funda")
 	{
-		rg.POST("/", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
-		})
+		//rg.POST("/agent-contact", func(c *gin.Context) {
+		//	c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
+		//})
+		interactor := usecases.NewContactAgentInteractor(memory.NewInMemoryHouseRepository())
+		rg.POST("/agent-contact", controllers.NewAgentController(interactor).Contact)
+
 	}
 }
